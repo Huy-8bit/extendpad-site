@@ -1,0 +1,19 @@
+---
+interface Props {
+  id: string;
+  index: string;
+  label: string;
+  aside?: string;
+  title: string;
+  lead?: string;
+}
+const { id, index, label, aside, title, lead } = Astro.props;
+---
+<div class="section-index">
+  <span>{index} / {label}</span>
+  {aside && <span>{aside}</span>}
+</div>
+<div class="section-head">
+  <h2 id={id} set:html={title} />
+  {lead && <p>{lead}</p>}
+</div>

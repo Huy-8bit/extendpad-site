@@ -1,0 +1,46 @@
+---
+// The video path from the Mac to the tablet, plus the two side channels (cursor, pairing).
+const mac = [
+  { name: 'CGVirtual<wbr>Display', role: 'Virtual monitor' },
+  { name: 'ScreenCapture<wbr>Kit', role: 'Captures it' },
+  { name: 'Video<wbr>Toolbox', role: 'Hardware H.264' },
+  { name: 'Loopback socket', role: '127.0.0.1 only' },
+];
+const tablet = [
+  { name: 'Media<wbr>Codec', role: 'Hardware decoder' },
+  { name: 'Surface<wbr>View', role: 'On screen' },
+];
+---
+<figure class="pipeline" aria-labelledby="pipeline-caption">
+  <ol class="pipe-row">
+    <li class="pipe-group" aria-label="On the Mac">
+      <p class="pipe-group-label">Mac · Swift / SwiftUI</p>
+      <ol class="pipe-nodes">
+        {mac.map((n) => <li class="pipe-node"><strong set:html={n.name} /><span>{n.role}</span></li>)}
+      </ol>
+    </li>
+    <li class="pipe-cable" aria-label="Over the USB-C cable">
+      <p class="pipe-group-label">USB-C cable</p>
+      <div class="pipe-node pipe-node-accent"><strong>adb reverse</strong><span>Over USB</span></div>
+    </li>
+    <li class="pipe-group" aria-label="On the tablet">
+      <p class="pipe-group-label">Tablet · Kotlin</p>
+      <ol class="pipe-nodes">
+        {tablet.map((n) => <li class="pipe-node"><strong set:html={n.name} /><span>{n.role}</span></li>)}
+      </ol>
+    </li>
+  </ol>
+  <div class="pipe-lanes">
+    <div class="pipe-lane">
+      <span class="pipe-lane-key">Cursor</span>
+      <span class="pipe-lane-line" aria-hidden="true"></span>
+      <span>Sent separately at <b>120 Hz</b> and drawn by the tablet, independent of the video frame rate.</span>
+    </div>
+    <div class="pipe-lane">
+      <span class="pipe-lane-key">Pairing</span>
+      <span class="pipe-lane-line" aria-hidden="true"></span>
+      <span>A token is delivered over ADB; both sides authenticate with <b>HMAC-SHA256</b>.</span>
+    </div>
+  </div>
+  <figcaption id="pipeline-caption">CGVirtualDisplay → ScreenCaptureKit → VideoToolbox H.264 → loopback socket → adb reverse over USB → MediaCodec → SurfaceView</figcaption>
+</figure>

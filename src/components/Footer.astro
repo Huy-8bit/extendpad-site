@@ -1,0 +1,58 @@
+---
+import Logo from './Logo.astro';
+import { LINKS, SITE, url } from '../config';
+const home = url('/');
+const cols = [
+  {
+    title: 'Product',
+    links: [
+      { label: 'How it works', href: `${home}#how-it-works` },
+      { label: 'Features', href: `${home}#features` },
+      { label: 'Download', href: `${home}#download` },
+    ],
+  },
+  {
+    title: 'Documentation',
+    links: [
+      { label: 'Setup guide', href: `${home}#setup` },
+      { label: 'Performance', href: `${home}#performance` },
+      { label: 'Limitations', href: `${home}#limitations` },
+      { label: 'FAQ', href: `${home}#faq` },
+    ],
+  },
+  {
+    title: 'Project',
+    links: [
+      { label: 'GitHub', href: LINKS.repo },
+      { label: 'Releases', href: LINKS.releases },
+      { label: 'Issues', href: LINKS.issues },
+      { label: 'Nguyen Gia Huy', href: LINKS.portfolio },
+    ],
+  },
+];
+---
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href={home} class="brand"><Logo /><span>ExtendPad</span></a>
+      <p>An Android tablet as a real extended display for your Mac, over a USB-C cable. Local only.</p>
+    </div>
+    {cols.map((c) => (
+      <div>
+        <h2>{c.title}</h2>
+        <ul>
+          {c.links.map((l) => (
+            <li><a href={l.href} {...(l.href.startsWith('http') ? { rel: 'noopener' } : {})}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© {SITE.year} {SITE.author}</span>
+      <span>Mac, macOS and Android are trademarks of their respective owners.</span>
+    </div>
+  </div>
+  <span class="footer-wordmark" aria-hidden="true">ExtendPad</span>
+</footer>

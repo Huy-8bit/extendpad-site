@@ -1,0 +1,24 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { LINKS, url } from '../config';
+const home = url('/');
+const nav = [
+  { href: '#how-it-works', label: 'How it works' },
+  { href: '#features', label: 'Features' },
+  { href: '#setup', label: 'Setup' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+<header class="site-header">
+  <nav class="container header-inner" aria-label="Main">
+    <a href={home} class="brand" aria-label="ExtendPad home"><Logo /><span>ExtendPad</span></a>
+    <ul class="nav-links">
+      {nav.map((n) => <li><a href={`${home}${n.href}`}>{n.label}</a></li>)}
+    </ul>
+    <div class="header-actions">
+      <a class="btn btn-ghost btn-sm header-github" href={LINKS.repo} rel="noopener"><Icon name="github" size={17} /><span>GitHub</span></a>
+      <a class="btn btn-primary btn-sm" href={`${home}#download`}>Download</a>
+    </div>
+  </nav>
+</header>

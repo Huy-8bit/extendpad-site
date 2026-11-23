@@ -1,0 +1,13 @@
+---
+// ExtendPad mark: a laptop screen extended onto a tablet.
+interface Props {
+  size?: number;
+}
+const { size = 28 } = Astro.props;
+---
+<svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+  <rect x="2.5" y="6" width="17" height="12" rx="2" stroke="currentColor" stroke-width="2.2" />
+  <path d="M1 22h20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+  <rect x="22" y="9" width="8" height="14" rx="2" fill="#155ef5" />
+  <path d="M15 12h9" stroke="#155ef5" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2 2.5" />
+</svg>

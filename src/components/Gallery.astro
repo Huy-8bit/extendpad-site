@@ -1,0 +1,27 @@
+---
+// Rendered only when public/screenshots/ contains images (see src/lib/screenshots.ts).
+import type { Screenshot } from '../lib/screenshots';
+interface Props {
+  index: string;
+  shots: Screenshot[];
+}
+const { index, shots } = Astro.props;
+---
+{shots.length > 0 && (
+  <section class="section" id="screenshots" aria-labelledby="screenshots-title">
+    <div class="container">
+      <div class="section-index"><span>{index} / IN USE</span><span>REAL PHOTOS</span></div>
+      <div class="section-head"><h2 id="screenshots-title">ExtendPad on real hardware.</h2></div>
+      <ul class="gallery">
+        {shots.map((s) => (
+          <li>
+            <figure>
+              <img src={s.src} alt={s.alt} loading="lazy" decoding="async" />
+              <figcaption>{s.alt}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
