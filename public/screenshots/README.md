@@ -7,7 +7,7 @@ Optional alt text / captions: create `captions.json` in this folder:
 
 ```json
 {
-  "extended-desktop.jpg": "ExtendPad extended macOS desktop on a Huawei MatePad SE",
+  "extended-desktop.jpg": "ExtendPad extending a macOS desktop onto an Android tablet",
   "menu-bar.png": "ExtendPad menu bar app on the Mac"
 }
 ```

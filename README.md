@@ -20,7 +20,7 @@ npm run verify     # type check + production build + link check
 | File | What it holds |
 | --- | --- |
 | [`src/config.ts`](src/config.ts) | Every external URL: repository, releases, issues, portfolio, and the two download links with sizes and requirements |
-| [`src/content.ts`](src/content.ts) | Page copy: features, setup steps, measured performance, limitations, FAQ |
+| [`src/content.ts`](src/content.ts) | Page copy: features, performance, setup steps, requirements, FAQ |
 | [`public/screenshots/`](public/screenshots/) | Real photos/screenshots. The "In use" gallery appears only when this folder contains images; optional alt text in `captions.json` |
 | [`scripts/check-links.mjs`](scripts/check-links.mjs) | Checks that internal links resolve under `/extendpad-site/`, that `#anchors` exist, and that the download buttons point at the GitHub Releases URLs |
 | `public/og.png` | Social preview image, regenerated with `npx playwright install chromium && npm run og` |

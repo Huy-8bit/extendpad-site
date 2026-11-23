@@ -6,11 +6,12 @@ import Pipeline from '../components/Pipeline.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Gallery from '../components/Gallery.astro';
 import { DOWNLOADS, LINKS } from '../config';
-import { features, setup, performance, limitations, faq } from '../content';
+import { features, speed, setup, requirements, faq } from '../content';
 import { getScreenshots } from '../lib/screenshots';
 
 const shots = getScreenshots();
 const featureIcon: IconName[] = ['display', 'sparkles', 'chip', 'refresh', 'key', 'menu', 'shield'];
+const speedIcon: IconName[] = ['chip', 'sparkles', 'usb', 'display', 'menu'];
 let stepNo = 0;
 ---
 <Base>
@@ -21,7 +22,7 @@ let stepNo = 0;
         <p class="eyebrow eyebrow-hero reveal"><span class="eyebrow-dot" aria-hidden="true"></span>A second display for your Mac</p>
         <h1 id="hero-title" class="hero-title reveal">ExtendPad</h1>
         <p class="hero-statement reveal">A USB-C second display for your Mac, using an Android tablet.</p>
-        <p class="hero-lead reveal">macOS gets a real extended monitor, listed in System Settings → Displays, and your tablet shows it over the cable with hardware video. Drag windows onto it like any other screen.</p>
+        <p class="hero-lead reveal">Plug in your tablet and your Mac gains a real extended display: listed in System Settings → Displays, ready for windows, apps and your own arrangement. Hardware video over one cable, and nothing in the cloud.</p>
         <div class="hero-actions reveal">
           <a class="pill pill-primary pill-lg" href="#download"><Icon name="download" size={18} />Download</a>
           <a class="pill pill-glass pill-lg" href={LINKS.repo} rel="noopener"><Icon name="github" size={18} />View on GitHub</a>
@@ -33,11 +34,6 @@ let stepNo = 0;
           <li>Android 8+ / HarmonyOS 2–4</li>
         </ul>
         <HeroArt />
-        <ul class="tested glass reveal" aria-label="Test hardware" data-shine>
-          <li><span>Tested on</span><b>Huawei MatePad SE</b><small>AGS6-W09 · HarmonyOS 2 / Android 10</small></li>
-          <li><span>With</span><b>MacBook Pro M1 Pro</b><small>macOS 15.7.4</small></li>
-          <li><span>Other tablets</span><b>Should work</b><small>Untested</small></li>
-        </ul>
       </div>
     </section>
 
@@ -123,28 +119,30 @@ let stepNo = 0;
     <!-- Performance -->
     <section class="section" id="performance" aria-labelledby="performance-title">
       <div class="wrap">
-        <SectionHead id="performance-title" label="Performance" title="Measured on <em>the test hardware.</em>" lead={`${performance.hardware}. Other hardware may differ.`} />
-        <div class="perf glass reveal">
-          <table>
-            <caption>Measured on the test hardware</caption>
-            <thead><tr><th scope="col">Measurement</th><th scope="col">Result</th><th scope="col">Note</th></tr></thead>
-            <tbody>
-              {performance.rows.map((r) => (
-                <tr><th scope="row">{r.metric}</th><td class="perf-value">{r.value}</td><td>{'note' in r ? r.note : ''}</td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <SectionHead id="performance-title" label="Performance" title="Built for <em>speed.</em>" lead="Every stage of the path is chosen to keep the second screen responsive." />
+        <ul class="speed">
+          {speed.map((sp, i) => (
+            <li class:list={['speed-card glass reveal', { 'speed-card-wide': i === 0 }]} data-shine style={`--d:${(i % 3) * 70}ms`}>
+              <span class="tile-icon"><Icon name={speedIcon[i]} size={22} /></span>
+              <h3>{sp.title}</h3>
+              <p>{sp.body}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
-    <!-- Limitations -->
-    <section class="section" id="limitations" aria-labelledby="limitations-title">
+    <!-- Requirements -->
+    <section class="section" id="requirements" aria-labelledby="requirements-title">
       <div class="wrap">
-        <SectionHead id="limitations-title" label="Limitations" title="Worth knowing <em>before you install.</em>" />
-        <ul class="limits">
-          {limitations.map((l, i) => (
-            <li class="glass reveal" style={`--d:${(i % 2) * 70}ms`}><span class="limit-icon" aria-hidden="true"><Icon name="alert" size={18} /></span><span set:html={l} /></li>
+        <SectionHead id="requirements-title" label="Requirements" title="What <em>you need.</em>" />
+        <ul class="reqs">
+          {requirements.map((r, i) => (
+            <li class="req glass reveal" data-shine style={`--d:${i * 60}ms`}>
+              <span class="req-icon"><Icon name={r.icon as IconName} size={22} /></span>
+              <h3>{r.title}</h3>
+              <ul>{r.items.map((it) => <li set:html={it} />)}</ul>
+            </li>
           ))}
         </ul>
       </div>
