@@ -10,15 +10,13 @@ const nav = [
   { href: '#faq', label: 'FAQ' },
 ];
 ---
-<header class="site-header">
-  <nav class="container header-inner" aria-label="Main">
+<header class="nav-wrap">
+  <nav class="nav glass" aria-label="Main" data-shine>
     <a href={home} class="brand" aria-label="ExtendPad home"><Logo /><span>ExtendPad</span></a>
     <ul class="nav-links">
       {nav.map((n) => <li><a href={`${home}${n.href}`}>{n.label}</a></li>)}
     </ul>
-    <div class="header-actions">
-      <a class="btn btn-ghost btn-sm header-github" href={LINKS.repo} rel="noopener"><Icon name="github" size={17} /><span>GitHub</span></a>
-      <a class="btn btn-primary btn-sm" href={`${home}#download`}>Download</a>
-    </div>
+    <a class="nav-icon" href={LINKS.repo} rel="noopener" aria-label="ExtendPad on GitHub"><Icon name="github" size={18} /></a>
+    <a class="pill pill-primary pill-sm" href={`${home}#download`}>Download</a>
   </nav>
 </header>

@@ -2,7 +2,8 @@
 // 24px stroke icons (lucide-style). Brand mark for GitHub is filled.
 export type IconName =
   | 'display' | 'cursor' | 'chip' | 'refresh' | 'key' | 'menu' | 'lock'
-  | 'github' | 'download' | 'arrow-right' | 'arrow-up-right' | 'apple' | 'android' | 'copy' | 'check' | 'plus' | 'usb';
+  | 'github' | 'download' | 'arrow-right' | 'arrow-up-right' | 'apple' | 'android' | 'copy' | 'check' | 'plus' | 'usb'
+  | 'aperture' | 'plug' | 'tablet' | 'sparkles' | 'shield' | 'alert';
 interface Props {
   name: IconName;
   size?: number;
@@ -26,6 +27,12 @@ const paths: Record<IconName, string> = {
   copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
+  aperture: '<circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/>',
+  plug: '<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
+  tablet: '<rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M18 12h.01"/>',
+  sparkles: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  alert: '<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
   usb: '<path d="M12 2v14"/><path d="m8 6 4-4 4 4"/><circle cx="12" cy="19" r="3"/><path d="M7 10v2a2 2 0 0 0 2 2h3M17 8v4a2 2 0 0 1-2 2h-3"/>',
 };
 const github =

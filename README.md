@@ -3,7 +3,7 @@
 Product website for [ExtendPad](https://github.com/Huy-8bit/ExtendPad), published with GitHub Pages at
 <https://huy-8bit.github.io/extendpad-site/>.
 
-Static [Astro](https://astro.build) site with plain CSS, sharing the visual system of the LockLens site.
+Static [Astro](https://astro.build) site with plain CSS in a "liquid glass" style: a dark aurora backdrop, frosted translucent panels with an iridescent rim, and a pointer-following highlight. Reduced transparency and reduced motion preferences are respected.
 `site` and `base` are set in [`astro.config.mjs`](astro.config.mjs); every internal link goes through `url()`
 in [`src/config.ts`](src/config.ts) so it respects the `/extendpad-site/` base path.
 

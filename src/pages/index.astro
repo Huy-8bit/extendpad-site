@@ -10,62 +10,53 @@ import { features, setup, performance, limitations, faq } from '../content';
 import { getScreenshots } from '../lib/screenshots';
 
 const shots = getScreenshots();
-// Section numbers follow the sections actually shown (the gallery appears only with real photos).
-const order = ['how', 'features', ...(shots.length ? ['gallery'] : []), 'download', 'setup', 'performance', 'limitations', 'faq'];
-const n = (key: string) => String(order.indexOf(key) + 1).padStart(2, '0');
+const featureIcon: IconName[] = ['display', 'sparkles', 'chip', 'refresh', 'key', 'menu', 'shield'];
 let stepNo = 0;
 ---
 <Base>
   <main id="main">
     <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="hero-label"><span aria-hidden="true"></span>MAC + ANDROID TABLET · OVER USB-C</p>
-          <h1 id="hero-title">ExtendPad</h1>
-          <p class="hero-statement">A USB-C second display for your Mac, <em>using an Android tablet.</em></p>
-          <p class="hero-lead">ExtendPad creates a real extended monitor that macOS lists in System Settings → Displays, and streams it to your tablet with hardware video over the cable. Drag windows onto it like any other screen.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="#download"><Icon name="download" size={18} />Download</a>
-            <a class="btn btn-ghost btn-lg" href={LINKS.repo} rel="noopener"><Icon name="github" size={18} />View on GitHub</a>
-          </div>
-          <ul class="badges" aria-label="At a glance">
-            <li>USB-C, no Wi-Fi</li>
-            <li>Local only</li>
-            <li>macOS 13+</li>
-            <li>Android 8+ / HarmonyOS 2–4</li>
-          </ul>
+      <div class="wrap hero-inner">
+        <p class="eyebrow eyebrow-hero reveal"><span class="eyebrow-dot" aria-hidden="true"></span>A second display for your Mac</p>
+        <h1 id="hero-title" class="hero-title reveal">ExtendPad</h1>
+        <p class="hero-statement reveal">A USB-C second display for your Mac, using an Android tablet.</p>
+        <p class="hero-lead reveal">macOS gets a real extended monitor, listed in System Settings → Displays, and your tablet shows it over the cable with hardware video. Drag windows onto it like any other screen.</p>
+        <div class="hero-actions reveal">
+          <a class="pill pill-primary pill-lg" href="#download"><Icon name="download" size={18} />Download</a>
+          <a class="pill pill-glass pill-lg" href={LINKS.repo} rel="noopener"><Icon name="github" size={18} />View on GitHub</a>
         </div>
+        <ul class="chips reveal" aria-label="At a glance">
+          <li>USB-C, no Wi-Fi</li>
+          <li>Local only</li>
+          <li>macOS 13+</li>
+          <li>Android 8+ / HarmonyOS 2–4</li>
+        </ul>
         <HeroArt />
-      </div>
-    </section>
-    <div class="tested-band">
-      <div class="container tested-inner">
-        <span class="tested-label">TESTED ON</span>
-        <ul>
-          <li><b>Huawei MatePad SE</b><span>AGS6-W09 · HarmonyOS 2 / Android 10</span></li>
-          <li><b>MacBook Pro M1 Pro</b><span>macOS 15.7.4</span></li>
-          <li><b>Other tablets</b><span>Should work, untested</span></li>
+        <ul class="tested glass reveal" aria-label="Test hardware" data-shine>
+          <li><span>Tested on</span><b>Huawei MatePad SE</b><small>AGS6-W09 · HarmonyOS 2 / Android 10</small></li>
+          <li><span>With</span><b>MacBook Pro M1 Pro</b><small>macOS 15.7.4</small></li>
+          <li><span>Other tablets</span><b>Should work</b><small>Untested</small></li>
         </ul>
       </div>
-    </div>
+    </section>
 
     <!-- How it works -->
     <section class="section" id="how-it-works" aria-labelledby="how-title">
-      <div class="container">
-        <SectionHead id="how-title" index={n('how')} label="HOW IT WORKS" aside="ONE CABLE. NO NETWORK." title="A virtual monitor on the Mac, <em>a hardware decoder on the tablet.</em>" lead="macOS gets a genuine second display. ExtendPad captures it, encodes it in hardware and sends it through adb reverse over the USB cable, where the tablet decodes and shows it." />
+      <div class="wrap">
+        <SectionHead id="how-title" label="How it works" title="One cable. <em>No network.</em>" lead="A virtual monitor on the Mac is captured, encoded in hardware and sent through adb reverse over USB, where the tablet’s hardware decoder puts it on screen." />
         <Pipeline />
       </div>
     </section>
 
     <!-- Features -->
     <section class="section" id="features" aria-labelledby="features-title">
-      <div class="container">
-        <SectionHead id="features-title" index={n('features')} label="FEATURES" aside="EXTENDED, NOT MIRRORED" title="A second screen <em>that behaves like one.</em>" />
-        <ul class="feature-grid">
+      <div class="wrap">
+        <SectionHead id="features-title" label="Features" title="A second screen <em>that behaves like one.</em>" />
+        <ul class="bento">
           {features.map((f, i) => (
-            <li class:list={['feature', { 'feature-wide': i === 0 }]}>
-              <span class="feature-icon"><Icon name={f.icon as IconName} size={22} /></span>
+            <li class:list={['tile glass reveal', { 'tile-wide': i === 0 || i === 6 }]} data-shine style={`--d:${(i % 3) * 70}ms`}>
+              <span class="tile-icon"><Icon name={featureIcon[i]} size={22} /></span>
               <h3>{f.title}</h3>
               <p>{f.body}</p>
             </li>
@@ -74,30 +65,30 @@ let stepNo = 0;
       </div>
     </section>
 
-    <Gallery index={n('gallery')} shots={shots} />
+    <Gallery shots={shots} />
 
     <!-- Download -->
     <section class="section" id="download" aria-labelledby="download-title">
-      <div class="container">
-        <SectionHead id="download-title" index={n('download')} label="DOWNLOAD" aside="FROM GITHUB RELEASES" title="Two apps. <em>One cable.</em>" lead="Install the menu-bar app on your Mac and the companion app on your tablet." />
-        <div class="download-grid">
-          <div class="download-card">
-            <span class="download-icon"><Icon name="apple" size={26} /></span>
+      <div class="wrap">
+        <SectionHead id="download-title" label="Download" title="Two apps. <em>One cable.</em>" lead="The menu-bar app for your Mac and the companion app for your tablet, from GitHub Releases." />
+        <div class="downloads">
+          <div class="dl glass dl-mac reveal" data-shine>
+            <span class="dl-icon"><Icon name="apple" size={28} /></span>
             <h3>Mac</h3>
-            <p class="download-meta">{DOWNLOADS.mac.size} · {DOWNLOADS.mac.requirements.join(' · ')}</p>
-            <a class="btn btn-primary btn-lg download-btn" href={DOWNLOADS.mac.href}><Icon name="download" size={18} />{DOWNLOADS.mac.label}</a>
-            <p class="download-note">Swift / SwiftUI menu-bar app. Needs <code>adb</code> on the Mac.</p>
+            <p class="dl-meta">{DOWNLOADS.mac.size} · {DOWNLOADS.mac.requirements.join(' · ')}</p>
+            <a class="pill pill-primary pill-lg dl-btn" href={DOWNLOADS.mac.href}><Icon name="download" size={18} />{DOWNLOADS.mac.label}</a>
+            <p class="dl-note">Swift / SwiftUI menu-bar app. Needs <code>adb</code> on the Mac.</p>
           </div>
-          <div class="download-card">
-            <span class="download-icon"><Icon name="android" size={26} /></span>
+          <div class="dl glass dl-android reveal" data-shine style="--d:80ms">
+            <span class="dl-icon"><Icon name="android" size={28} /></span>
             <h3>Android tablet</h3>
-            <p class="download-meta">{DOWNLOADS.android.size} · {DOWNLOADS.android.requirements.join(' · ')}</p>
-            <a class="btn btn-primary btn-lg download-btn" href={DOWNLOADS.android.href}><Icon name="download" size={18} />{DOWNLOADS.android.label}</a>
-            <p class="download-note">Kotlin app. English and Vietnamese UI on both apps.</p>
+            <p class="dl-meta">{DOWNLOADS.android.size} · {DOWNLOADS.android.requirements.join(' · ')}</p>
+            <a class="pill pill-primary pill-lg dl-btn" href={DOWNLOADS.android.href}><Icon name="download" size={18} />{DOWNLOADS.android.label}</a>
+            <p class="dl-note">Kotlin app. Both apps come in English and Vietnamese.</p>
           </div>
         </div>
-        <div class="download-footer">
-          <a class="text-link" href={LINKS.releases} rel="noopener">All releases <Icon name="arrow-up-right" size={16} /></a>
+        <div class="dl-footer glass reveal">
+          <a class="link" href={LINKS.releases} rel="noopener">All releases <Icon name="arrow-up-right" size={16} /></a>
           <p>The Mac app already contains the APK and can install it on the tablet over USB, so the separate APK download is optional.</p>
         </div>
       </div>
@@ -105,42 +96,41 @@ let stepNo = 0;
 
     <!-- Setup -->
     <section class="section" id="setup" aria-labelledby="setup-title">
-      <div class="container">
-        <SectionHead id="setup-title" index={n('setup')} label="SETUP GUIDE" aside="TABLET · MAC · CONNECT" title="From unboxed tablet <em>to second screen.</em>" />
-        <div class="setup-grid">
-          {setup.map((group) => (
-            <div class="setup-card">
+      <div class="wrap">
+        <SectionHead id="setup-title" label="Setup guide" title="Three short stops <em>to a second screen.</em>" />
+        <div class="setup">
+          {setup.map((group, gi) => (
+            <div class="setup-col glass reveal" data-shine style={`--d:${gi * 80}ms`}>
+              <p class="setup-kicker">{['On the tablet', 'On the Mac', 'Together'][gi]}</p>
               <h3>{group.title}</h3>
               <ol>
                 {group.steps.map((s) => {
                   stepNo += 1;
-                  return <li><span class="step-no" aria-hidden="true">{String(stepNo).padStart(2, '0')}</span><span set:html={s} /></li>;
+                  return <li><span class="step" aria-hidden="true">{stepNo}</span><span set:html={s} /></li>;
                 })}
               </ol>
             </div>
           ))}
         </div>
-        <div class="command">
+        <div class="command glass reveal">
           <span class="command-label">Install adb on the Mac</span>
           <code id="adb-command">brew install android-platform-tools</code>
-          <button type="button" class="copy-btn" data-copy="#adb-command" aria-label="Copy command">
-            <Icon name="copy" size={16} /><span>Copy</span>
-          </button>
+          <button type="button" class="copy" data-copy="#adb-command" aria-label="Copy command"><Icon name="copy" size={16} /><span>Copy</span></button>
         </div>
       </div>
     </section>
 
     <!-- Performance -->
     <section class="section" id="performance" aria-labelledby="performance-title">
-      <div class="container">
-        <SectionHead id="performance-title" index={n('performance')} label="PERFORMANCE" aside="MEASURED, NOT PROMISED" title="Measured on <em>the test hardware.</em>" lead={`${performance.hardware}. Other hardware may differ.`} />
-        <div class="table-wrap">
-          <table class="perf-table">
-            <caption>Measured on the test hardware: {performance.hardware}</caption>
+      <div class="wrap">
+        <SectionHead id="performance-title" label="Performance" title="Measured on <em>the test hardware.</em>" lead={`${performance.hardware}. Other hardware may differ.`} />
+        <div class="perf glass reveal">
+          <table>
+            <caption>Measured on the test hardware</caption>
             <thead><tr><th scope="col">Measurement</th><th scope="col">Result</th><th scope="col">Note</th></tr></thead>
             <tbody>
               {performance.rows.map((r) => (
-                <tr><th scope="row">{r.metric}</th><td>{r.value}</td><td>{'note' in r ? r.note : ''}</td></tr>
+                <tr><th scope="row">{r.metric}</th><td class="perf-value">{r.value}</td><td>{'note' in r ? r.note : ''}</td></tr>
               ))}
             </tbody>
           </table>
@@ -150,29 +140,29 @@ let stepNo = 0;
 
     <!-- Limitations -->
     <section class="section" id="limitations" aria-labelledby="limitations-title">
-      <div class="container">
-        <SectionHead id="limitations-title" index={n('limitations')} label="LIMITATIONS" aside="READ BEFORE INSTALLING" title="What to know <em>before you install.</em>" />
+      <div class="wrap">
+        <SectionHead id="limitations-title" label="Limitations" title="Worth knowing <em>before you install.</em>" />
         <ul class="limits">
-          {limitations.map((l) => <li set:html={l} />)}
+          {limitations.map((l, i) => (
+            <li class="glass reveal" style={`--d:${(i % 2) * 70}ms`}><span class="limit-icon" aria-hidden="true"><Icon name="alert" size={18} /></span><span set:html={l} /></li>
+          ))}
         </ul>
       </div>
     </section>
 
     <!-- FAQ -->
     <section class="section" id="faq" aria-labelledby="faq-title">
-      <div class="container faq-grid">
-        <div>
-          <SectionHead id="faq-title" index={n('faq')} label="FAQ" title="Common questions." />
-          <p class="faq-more">Something else? <a class="text-link" href={LINKS.issues} rel="noopener">Open an issue <Icon name="arrow-up-right" size={16} /></a></p>
-        </div>
-        <div class="faq-list">
+      <div class="wrap wrap-narrow">
+        <SectionHead id="faq-title" label="FAQ" title="Common <em>questions.</em>" />
+        <div class="faq">
           {faq.map((f) => (
-            <details>
+            <details class="glass reveal">
               <summary><span>{f.q}</span><Icon name="plus" size={18} /></summary>
               <p set:html={f.a} />
             </details>
           ))}
         </div>
+        <p class="faq-more">Something else? <a class="link" href={LINKS.issues} rel="noopener">Open an issue <Icon name="arrow-up-right" size={16} /></a></p>
       </div>
     </section>
   </main>

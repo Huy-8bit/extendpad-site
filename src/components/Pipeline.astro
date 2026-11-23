@@ -1,46 +1,41 @@
 ---
-// The video path from the Mac to the tablet, plus the two side channels (cursor, pairing).
-const mac = [
-  { name: 'CGVirtual<wbr>Display', role: 'Virtual monitor' },
-  { name: 'ScreenCapture<wbr>Kit', role: 'Captures it' },
-  { name: 'Video<wbr>Toolbox', role: 'Hardware H.264' },
-  { name: 'Loopback socket', role: '127.0.0.1 only' },
-];
-const tablet = [
-  { name: 'Media<wbr>Codec', role: 'Hardware decoder' },
-  { name: 'Surface<wbr>View', role: 'On screen' },
+// The video path from the Mac to the tablet as one "liquid" track, plus the two side channels.
+import Icon, { type IconName } from './Icon.astro';
+const stops: { name: string; role: string; icon: IconName; zone: 'mac' | 'cable' | 'tablet' }[] = [
+  { name: 'CGVirtual<wbr>Display', role: 'Virtual monitor', icon: 'display', zone: 'mac' },
+  { name: 'ScreenCapture<wbr>Kit', role: 'Captures it', icon: 'aperture', zone: 'mac' },
+  { name: 'Video<wbr>Toolbox', role: 'Hardware H.264', icon: 'chip', zone: 'mac' },
+  { name: 'Loopback socket', role: '127.0.0.1 only', icon: 'plug', zone: 'mac' },
+  { name: 'adb reverse', role: 'Over USB', icon: 'usb', zone: 'cable' },
+  { name: 'Media<wbr>Codec', role: 'Hardware decoder', icon: 'chip', zone: 'tablet' },
+  { name: 'Surface<wbr>View', role: 'On screen', icon: 'tablet', zone: 'tablet' },
 ];
 ---
-<figure class="pipeline" aria-labelledby="pipeline-caption">
-  <ol class="pipe-row">
-    <li class="pipe-group" aria-label="On the Mac">
-      <p class="pipe-group-label">Mac · Swift / SwiftUI</p>
-      <ol class="pipe-nodes">
-        {mac.map((n) => <li class="pipe-node"><strong set:html={n.name} /><span>{n.role}</span></li>)}
-      </ol>
-    </li>
-    <li class="pipe-cable" aria-label="Over the USB-C cable">
-      <p class="pipe-group-label">USB-C cable</p>
-      <div class="pipe-node pipe-node-accent"><strong>adb reverse</strong><span>Over USB</span></div>
-    </li>
-    <li class="pipe-group" aria-label="On the tablet">
-      <p class="pipe-group-label">Tablet · Kotlin</p>
-      <ol class="pipe-nodes">
-        {tablet.map((n) => <li class="pipe-node"><strong set:html={n.name} /><span>{n.role}</span></li>)}
-      </ol>
-    </li>
+<figure class="flow reveal" aria-labelledby="flow-caption">
+  <div class="flow-zones" aria-hidden="true">
+    <span class="zone zone-mac">Mac · Swift / SwiftUI</span>
+    <span class="zone zone-cable">USB-C</span>
+    <span class="zone zone-tablet">Tablet · Kotlin</span>
+  </div>
+  <ol class="track">
+    {stops.map((s, i) => (
+      <li class:list={['stop', `stop-${s.zone}`]} style={`--i:${i}`}>
+        <span class="bubble glass"><Icon name={s.icon} size={20} /></span>
+        <strong set:html={s.name} />
+        <span class="stop-role">{s.role}</span>
+        <span class="sr-only">{s.zone === 'mac' ? 'on the Mac' : s.zone === 'cable' ? 'over the USB-C cable' : 'on the tablet'}</span>
+      </li>
+    ))}
   </ol>
-  <div class="pipe-lanes">
-    <div class="pipe-lane">
-      <span class="pipe-lane-key">Cursor</span>
-      <span class="pipe-lane-line" aria-hidden="true"></span>
-      <span>Sent separately at <b>120 Hz</b> and drawn by the tablet, independent of the video frame rate.</span>
+  <div class="side-channels">
+    <div class="channel glass" data-shine>
+      <span class="channel-key">Cursor · 120 Hz</span>
+      <p>Sent separately and drawn by the tablet, so it stays smooth regardless of the video frame rate.</p>
     </div>
-    <div class="pipe-lane">
-      <span class="pipe-lane-key">Pairing</span>
-      <span class="pipe-lane-line" aria-hidden="true"></span>
-      <span>A token is delivered over ADB; both sides authenticate with <b>HMAC-SHA256</b>.</span>
+    <div class="channel glass" data-shine>
+      <span class="channel-key">Pairing · HMAC-SHA256</span>
+      <p>A pairing token is delivered over ADB, and both sides use it to authenticate with HMAC-SHA256.</p>
     </div>
   </div>
-  <figcaption id="pipeline-caption">CGVirtualDisplay → ScreenCaptureKit → VideoToolbox H.264 → loopback socket → adb reverse over USB → MediaCodec → SurfaceView</figcaption>
+  <figcaption id="flow-caption" class="sr-only">CGVirtualDisplay → ScreenCaptureKit → VideoToolbox H.264 → loopback socket → adb reverse over USB → MediaCodec → SurfaceView</figcaption>
 </figure>

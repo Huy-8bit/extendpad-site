@@ -1,19 +1,15 @@
 ---
 interface Props {
   id: string;
-  index: string;
   label: string;
-  aside?: string;
   title: string;
   lead?: string;
+  align?: 'center' | 'start';
 }
-const { id, index, label, aside, title, lead } = Astro.props;
+const { id, label, title, lead, align = 'center' } = Astro.props;
 ---
-<div class="section-index">
-  <span>{index} / {label}</span>
-  {aside && <span>{aside}</span>}
-</div>
-<div class="section-head">
+<header class:list={['sec-head', { 'sec-head-start': align === 'start' }]}>
+  <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>{label}</p>
   <h2 id={id} set:html={title} />
-  {lead && <p>{lead}</p>}
-</div>
+  {lead && <p class="sec-lead">{lead}</p>}
+</header>
